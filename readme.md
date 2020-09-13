@@ -30,10 +30,15 @@ Successfully created/updated stack - array-combinations in eu-west-2
   - SrcSqsQueue.
 
 5. Test the application:
+
  Testing can be done from cmd prompt or from sqs console.
+ 
  To test from command prompt:
+ 
      aws sqs send-message --region eu-west-2 --endpoint-url https://sqs.eu-west-2.amazonaws.com/ --queue-url 'url of the sqsqueue' --message-body "{"input":["A","B","C","D"]}"
+ 
  To test from sqs console:
+ 
     Goto SrcSqsQueue, click on 'Send and receive messages', enter the json {"input":["A","B","C","D"]}
 
     check the dynamodb table 'arrayCombinations' via aws console to check the persisted combination records.

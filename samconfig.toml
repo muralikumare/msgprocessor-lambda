@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "array-combinations"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1h8nhhv8l9l01"
+s3_prefix = "array-combinations"
+region = "eu-west-2"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+

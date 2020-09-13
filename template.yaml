@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Build a serverless solutions to find all the combinations of an array strings. Input passed to a lambda via sqs, and output stored to dynamodb.
+Resources:
+  combinator:
+      Type: AWS::Serverless::Function
+      Properties:
+        ReservedConcurrentExecutions: 1
+        CodeUri: ./
+        Runtime: java8
+        MemorySize: 512
+        Timeout: 300
+        Handler: com.aa.combinator.handler.MessageHandler::handleRequest
+        Policies:
+         - DynamoDBWritePolicy:
+            TableName: !Ref SrcDynamoTable
+         - SQSPollerPolicy:
+            QueueName: !Ref SrcSqsQueue
+        Events:
+         MySQSEvent:
+          Type: SQS
+          Properties:
+           Queue: !GetAtt SrcSqsQueue.Arn
+           BatchSize: 1
+  SrcDynamoTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+       TableName: arrayCombinations
+       AttributeDefinitions:
+        - AttributeName: messageId
+          AttributeType: S
+       KeySchema:
+        - AttributeName: messageId
+          KeyType: HASH
+       ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+  SrcSqsQueue:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: "SrcSqsQueue"
+        VisibilityTimeout: 300

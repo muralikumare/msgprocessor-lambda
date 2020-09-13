@@ -1,5 +1,5 @@
 prerequisites:
-  Java 8 , Gradle 4.4, AWS SAM CLI, Docker(only for local testing).
+  Java 8 , Gradle 4.4, AWS SAM CLI, Docker(local testing).
  
 
 Please follow the steps to build & run the application:
